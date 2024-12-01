@@ -12,6 +12,7 @@ import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import ProtectedRoute from './utils/protectedRoute';
 import useAuth from './hooks/useAuth';
+import FAQ from './pages/FAQ';
 
 const App = () => {
   const { isAuthenticated } = useAuth();
@@ -33,6 +34,7 @@ const App = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/details/:id" element={<PresentationDetails />} />
             <Route path="/trending" element={<Trending />} />
+            <Route path="/faq" element={<FAQ />} />
 
             {/* Protected Routes */}
             <Route
