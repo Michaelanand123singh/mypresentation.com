@@ -8,19 +8,30 @@ import {
 import CategoryBadge from './CategoryBadge';
 
 const PresentationCard = ({ 
-  title, 
-  price, 
-  thumbnail, 
-  category,
-  downloads,
-  rating,
-  onClick 
+  title = 'Untitled Presentation', 
+  price = 0, 
+  thumbnail = '/assets/images/default-presentation-thumb.png', 
+  category = 'Uncategorized',
+  downloads = 0,
+  rating = 0,
+  onClick = () => {}
 }) => {
   const [isWishlisted, setIsWishlisted] = useState(false);
 
   const toggleWishlist = (e) => {
     e.stopPropagation();
     setIsWishlisted(!isWishlisted);
+  };
+
+  // Format price with two decimal places
+  const formattedPrice = price.toFixed(2);
+
+  // Format large download numbers
+  const formatDownloads = (num) => {
+    if (num >= 1000) {
+      return `${(num / 1000).toFixed(1)}k`;
+    }
+    return num.toString();
   };
 
   return (
@@ -36,6 +47,7 @@ const PresentationCard = ({
         transition-all 
         duration-300 
         bg-white
+        cursor-pointer
       "
       onClick={onClick}
     >
@@ -55,6 +67,7 @@ const PresentationCard = ({
         />
         <button 
           onClick={toggleWishlist}
+          aria-label="Add to Wishlist"
           className="
             absolute 
             top-3 
@@ -64,12 +77,16 @@ const PresentationCard = ({
             p-2 
             shadow-md 
             hover:bg-gray-100
+            focus:outline-none
+            focus:ring-2
+            focus:ring-blue-500
           "
         >
           <Heart 
             size={20} 
             className={`
               ${isWishlisted ? 'text-red-500 fill-current' : 'text-gray-500'}
+              transition-colors
             `} 
           />
         </button>
@@ -83,13 +100,15 @@ const PresentationCard = ({
         </div>
 
         {/* Title */}
-        <h3 className="font-bold text-lg mb-2 line-clamp-2">{title}</h3>
+        <h3 className="font-bold text-lg mb-2 line-clamp-2" title={title}>
+          {title}
+        </h3>
 
         {/* Stats */}
         <div className="flex justify-between items-center text-gray-600 mb-3">
           <div className="flex items-center gap-1">
             <Download size={16} className="text-blue-600" />
-            <span className="text-sm">{downloads} downloads</span>
+            <span className="text-sm">{formatDownloads(downloads)} downloads</span>
           </div>
           <div className="flex items-center gap-1">
             <Star size={16} className="text-yellow-500 fill-current" />
@@ -99,8 +118,9 @@ const PresentationCard = ({
 
         {/* Price and Action */}
         <div className="flex justify-between items-center">
-          <span className="text-xl font-bold text-blue-600">${price}</span>
+          <span className="text-xl font-bold text-blue-600">${formattedPrice}</span>
           <button
+            aria-label="Buy Presentation"
             className="
               flex 
               items-center 
@@ -112,6 +132,10 @@ const PresentationCard = ({
               rounded 
               hover:bg-blue-700 
               transition-colors
+              focus:outline-none
+              focus:ring-2
+              focus:ring-blue-500
+              focus:ring-offset-2
             "
           >
             <ShoppingCart size={16} />

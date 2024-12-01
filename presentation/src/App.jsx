@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import Catalog from './pages/Catalog';
 import PresentationDetails from './pages/PresentationDetails';
 import Categories from './pages/Categories';
+import Trending from './pages/Trending';
 import About from './pages/About';
 import Contact from './pages/Contact';
 import Checkout from './pages/Checkout';
@@ -31,6 +32,7 @@ const App = () => {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/details/:id" element={<PresentationDetails />} />
+            <Route path="/trending" element={<Trending />} />
 
             {/* Protected Routes */}
             <Route
